@@ -1,5 +1,7 @@
 # КОРУС Консалтинг. Задания для разработчика 2, 3
-> Стажёр-разработчик Георгий Новожилов, команда 2
+> Стажёр-разработчик Георгий Новожилов \
+> Системный аналитик Валентина Сорокина
+> Команда 2
 
 ## 1. Описание
 Задания: 
@@ -14,7 +16,8 @@
 - Отдельный скрипт, который считывает конфигурации и параметры подключения к БД и описывает задачу для запуска скрипта загрузки с нужными параметрами.  
 
 ER-диаграмма БД **internship_2_db**:
-![pic](https://github.com/Kaboupi/korus_interns_2/assets/24700915/99f8aa12-6e3a-4f9c-87a9-ef8aa5079b20)
+![image](https://github.com/Kaboupi/korus_interns_2/assets/24700915/bb62b352-98c9-48b1-9b49-2f8590fb62bf)
+
 (Тип данных transaction.pos - VARCHAR(150))
 
 ## 2. Структура
@@ -42,9 +45,11 @@ ER-диаграмма БД **internship_2_db**:
 └── requirements.txt
 ```
 Выполнение `dag_ddl_layers.py`:
-![Выполнение `dag_ddl_layers.py`](https://github.com/Kaboupi/korus_interns_2/assets/24700915/722979ee-791b-447f-ba76-25d72afeda45)
+![image](https://github.com/Kaboupi/korus_interns_2/assets/24700915/02001ce6-9df0-4967-87de-4f829638b45c)
+
 Выполнение `dag_operate.py`
-![Выполнение `dag_operate.py`](https://github.com/Kaboupi/korus_interns_2/assets/24700915/8a9b7477-1ba5-4172-98b2-1c839d75e90b)
+![image](https://github.com/Kaboupi/korus_interns_2/assets/24700915/dc93dcb5-827a-43ea-977b-6fce138d3113)
+
 
 ## 3. Запуск
 Запуск сервиса Apache Airflow происходил из нативно установленной версии. 
