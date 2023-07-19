@@ -20,7 +20,7 @@ logger.info('Connected successfully!')
 default_args = {
     'owner': 'airflow',
     'depends_on_past': False,
-    'start_date': datetime(2023, 7, 10),
+    'start_date': datetime(2023, 7, 19),
     'email_on_failure': False,
     'email_on_retry': False,
     'retries': 1,
@@ -28,7 +28,7 @@ default_args = {
 }
 
 dag = DAG(
-    'simple_select',
+    'run_second_task_interns',
     default_args=default_args,
     description='A simple DAG that selects with SQL query and saves to .csv and .json',
     schedule_interval=timedelta(days=1),

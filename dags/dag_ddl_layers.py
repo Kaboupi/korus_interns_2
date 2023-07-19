@@ -7,7 +7,7 @@ from airflow.operators.empty import EmptyOperator
 default_args = {
     'owner': 'airflow',
     'depends_on_past': False,
-    'start_date': datetime(2023, 7, 10),
+    'start_date': datetime(2023, 7, 19),
     'email_on_failure': False,
     'email_on_retry': False,
     'retries': 1,
@@ -15,9 +15,9 @@ default_args = {
 }
 
 dag = DAG(
-    'DDL_create',
+    'create_ddl_layers',
     default_args=default_args,
-    description='Create DDL statement for layers dds and error',
+    description='Создание схем и сущностей в БД',
     schedule_interval=timedelta(days=1),
 )
 

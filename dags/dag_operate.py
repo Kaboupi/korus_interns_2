@@ -26,7 +26,7 @@ conn_interns = engine_interns.connect()
 default_args = {
     'owner': 'airflow',
     'depends_on_past': False,
-    'start_date': datetime(2023, 7, 10),
+    'start_date': datetime(2023, 7, 19),
     'email_on_failure': False,
     'email_on_retry': False,
     'retries': 1,
@@ -34,9 +34,9 @@ default_args = {
 }
 
 dag = DAG(
-    'ETL',
+    'run_etl_processes',
     default_args=default_args,
-    description='A simple DAG file',
+    description='ETL процесс по обработке таблиц из схемы sources в схему dds',
     schedule_interval=timedelta(weeks=1),
 )
 
