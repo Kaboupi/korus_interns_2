@@ -1,7 +1,5 @@
 numpy
 pandas
-scipy
-loguru
 pyyaml
-matplotlib
-seaborn
+psycopg2-binary
+xlrd

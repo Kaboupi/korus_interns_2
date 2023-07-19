@@ -1,24 +1,20 @@
+import os
+import sys
 from datetime import datetime, timedelta
 import numpy as np
 import pandas as pd
-import psycopg2
 from sqlalchemy import create_engine, text as sql_text
-import yaml
 from loguru import logger
 from airflow import DAG
+from airflow.providers.postgres.hooks.postgres import PostgresHook
 from airflow.operators.python_operator import PythonOperator
 from airflow.operators.empty import EmptyOperator
+proj_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.append(proj_path)
 
-
-def get_yaml(path: str) -> dict:
-    with open(path) as f:
-        params = yaml.load(f, Loader=yaml.FullLoader)
-    
-    return params
-
-params = get_yaml('./src/params.yaml')['connection']['internship_sources']
-engine = create_engine(f"postgresql://{params['user']}:{params['password']}@{params['host']}:{5432}/{params['database']}")
-conn = engine.connect()
+PG_HOOK_SOURCES = PostgresHook(postgres_conn_id='korus_internship_sources')
+engine_sources = create_engine(PG_HOOK_SOURCES.get_uri().rsplit('?')[0])
+conn = engine_sources.connect()
 logger.info('Connected successfully!')
 
 default_args = {
@@ -32,7 +28,7 @@ default_args = {
 }
 
 dag = DAG(
-    '2nd_task_korus',
+    'simple_select',
     default_args=default_args,
     description='A simple DAG that selects with SQL query and saves to .csv and .json',
     schedule_interval=timedelta(days=1),
@@ -61,13 +57,13 @@ def select(**context):
     
 def save_to_csv(**context):
     df = pd.DataFrame(context['ti'].xcom_pull(key='dataframe'))
-    df.to_csv('./output/data.csv')
+    df.to_csv(f'{proj_path}/output/data.csv')
     logger.info('Dataframe successfully saved to .csv!')
     
 
 def save_to_json(**context):
     df = pd.DataFrame(context['ti'].xcom_pull(key='dataframe'))
-    df.to_json('./output/data.json', force_ascii=False)
+    df.to_json(f'{proj_path}/output/data.json', force_ascii=False)
     logger.info('Dataframe successfully saved to .json!')
 
 
