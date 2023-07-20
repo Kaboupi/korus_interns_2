@@ -39,7 +39,7 @@ ER-диаграмма БД **internship_2_db**:
 ├── output
 │   ├── data.csv
 │   ├── data.json
-├── output
+├── src
 │   ├── stores.csv
 │   ├── transaction.csv
 └── requirements.txt
