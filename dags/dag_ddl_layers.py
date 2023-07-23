@@ -5,6 +5,7 @@ from airflow.operators.postgres_operator import PostgresOperator
 from airflow.operators.empty import EmptyOperator
 proj_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
+
 default_args = {
     'owner': 'airflow',
     'depends_on_past': False,

@@ -3,6 +3,7 @@ import pandas as pd
 from loguru import logger
 from xlrd import xldate_as_datetime
 
+
 def get_stocks(df_stock: pd.DataFrame, df_product: pd.DataFrame) -> set:
     # Функция для конвертации времени
     def excel_date_to_datetime(num: int):

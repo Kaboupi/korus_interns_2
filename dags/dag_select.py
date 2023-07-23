@@ -9,10 +9,10 @@ from airflow.operators.python_operator import PythonOperator
 from airflow.operators.empty import EmptyOperator
 proj_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
+
 PG_HOOK_SOURCES = PostgresHook(postgres_conn_id='korus_internship_sources')
-engine_sources = create_engine(PG_HOOK_SOURCES.get_uri().rsplit('?')[0])
-conn = engine_sources.connect()
-logger.info('Connected successfully!')
+url_sources = PG_HOOK_SOURCES.get_uri().rsplit('?')[0]
+
 
 default_args = {
     'owner': 'airflow',
@@ -46,7 +46,7 @@ def select(**context):
         HAVING SUM(CASE WHEN available_quantity <> '' THEN available_quantity::NUMERIC(10,2) ELSE 0 END) >= 0
         ORDER BY sum_quantity DESC
         LIMIT 100;
-        ''', conn)
+        ''', con=url_sources)
     print(df)
     context['ti'].xcom_push(key='dataframe', value=df.to_dict())
     logger.info('Dataframe logger.infoed!')

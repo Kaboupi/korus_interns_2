@@ -1,13 +1,6 @@
 import os
 import pandas as pd
 from loguru import logger
-# import argparse
-
-# parser = argparse.ArgumentParser(description='Category ETL load args')
-# parser.add_argument('-conn_sources', help="Specify initial DB conn", default=None)
-# parser.add_argument('-conn_interns', help="Specify private DB conn", default=None)
-
-# args = parser.parse_args().__dict__
 
 
 def get_cats(df_cat: pd.DataFrame, df_brand: pd.DataFrame) -> set:

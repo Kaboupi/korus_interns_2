@@ -8,6 +8,7 @@ from airflow.operators.bash import BashOperator
 from airflow.operators.empty import EmptyOperator
 proj_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
+
 PG_HOOK_SOURCES = PostgresHook(postgres_conn_id='korus_internship_sources')
 PG_HOOK_INTERNS = PostgresHook(postgres_conn_id='korus_internship_2_db')
 

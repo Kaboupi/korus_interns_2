@@ -3,6 +3,7 @@ import pandas as pd
 from loguru import logger
 proj_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
+
 def get_transactions(df_trans: pd.DataFrame, df_product: pd.DataFrame) -> set:
     # Убрали дубликаты
     df_trans = df_trans.reset_index()

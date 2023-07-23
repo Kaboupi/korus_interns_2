@@ -61,7 +61,7 @@ ER-диаграмма БД **internship_2_db**:
 ![image](images/etl.png)
 
 ## 3. Запуск
-Запуск сервиса Apache Airflow происходил из нативно установленной версии. 
+Запуск сервиса Apache Airflow 2.6.3 происходил из нативно установленной версии. 
 Инструкция к нативной установке указана в [официальной документации Apache Airflow](https://airflow.apache.org/docs/apache-airflow/stable/start.html)
 Требуемые зависимости для корректной работы сервиса указаны в файле [requirements.txt](requirements.txt).
 
