@@ -40,7 +40,6 @@ task_truncate = PostgresOperator(
     dag=dag
 )
 
-
 trans_brand = BashOperator(
     task_id='transform_brand',
     bash_command=f'python {proj_path}/crud/dds_brand.py',
