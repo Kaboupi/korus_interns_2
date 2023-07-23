@@ -60,6 +60,8 @@ ER-диаграмма БД **internship_2_db**:
 Выполнение `dag_operate.py`
 ![image](images/etl.png)
 
+Больше скриншотов в папке ![images/](./images/)
+
 ## 3. Запуск
 Запуск сервиса Apache Airflow 2.6.3 происходил из нативно установленной версии. 
 Инструкция к нативной установке указана в [официальной документации Apache Airflow](https://airflow.apache.org/docs/apache-airflow/stable/start.html)
