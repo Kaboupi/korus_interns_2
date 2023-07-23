@@ -16,40 +16,49 @@
 - Отдельный скрипт, который считывает конфигурации и параметры подключения к БД и описывает задачу для запуска скрипта загрузки с нужными параметрами.  
 
 ER-диаграмма БД **internship_2_db**:
-![image](https://github.com/Kaboupi/korus_interns_2/assets/24700915/bb62b352-98c9-48b1-9b49-2f8590fb62bf)
+![image](images/er-diagram.png)
 
 (Тип данных transaction.pos - VARCHAR(150))
 
 ## 2. Структура
-[**./crud/etl_functions.py**](crud/etl_functions.py) - Функции для обработки данных из таблиц, используемые в DAG \
+[**./crud/**](crud/) - Скрипты для обработки данных из таблиц \
 [**./dags/dag_ddl_layers.py**](dags/dag_ddl_layers.py) - DAG, создающий схемы и сущности в БД команды \
-[**./dags/dag_operate.py**](dags/dag_operate.py) - DAG, отвечающий за ETL процесс задания \
-[**./dags/dag_select.py**](dags/dag_select.py) - DAG, выполняющий SELECT. Сохраняет полученные датафреймы в `./output`
+[**./dags/dag_operate.py**](dags/dag_operate.py) - DAG, реализующий ETL процесс. Использует скрипты из папки crud/ \
+[**./dags/dag_select.py**](dags/dag_select.py) - DAG, выполняющий SELECT. (Задание 2). Сохраняет полученные датафреймы в `./output`
 
-В DAG-e **dag_operate.py** присутствуют комментарии к каждой операции. Ниже представлена структура и приложены скриншоты успешного выполнения DAG-ов:
+Ниже представлена структура и приложены скриншоты успешного выполнения DAG-ов:
 ```
 ├── crud
 │   ├── __init__.py
-│   ├── etl_functions.py
+│   ├── dds_brand.py
+│   ├── dds_category.py
+│   ├── dds_product.py
+│   ├── dds_stock.py
+│   ├── dds_stores.py
+│   └── dds_transaction.py
 ├── dags
 │   ├── __init__.py
 │   ├── dag_ddl_layers.py
 │   ├── dag_operate.py
-│   ├── dag_select.py
+│   └── dag_select.py
 ├── output
 │   ├── data.csv
-│   ├── data.json
+│   └── data.json
+├── sql
+│   ├── dds_create.sql
+│   ├── dds_truncate.sql
+│   ├── error_create.sql
+│   └── schema_create.sql
 ├── src
 │   ├── stores.csv
-│   ├── transaction.csv
+│   └── transaction.csv
 └── requirements.txt
 ```
 Выполнение `dag_ddl_layers.py`:
-![image](https://github.com/Kaboupi/korus_interns_2/assets/24700915/02001ce6-9df0-4967-87de-4f829638b45c)
+![image](images/ddl.png)
 
 Выполнение `dag_operate.py`
-![image](https://github.com/Kaboupi/korus_interns_2/assets/24700915/dc93dcb5-827a-43ea-977b-6fce138d3113)
-
+![image](images/etl.png)
 
 ## 3. Запуск
 Запуск сервиса Apache Airflow происходил из нативно установленной версии. 
@@ -60,7 +69,7 @@ ER-диаграмма БД **internship_2_db**:
 ```bash
 pip install -Ur requirements.txt
 ```
-Для корректкой работы сервиса Apache Airflow не обязательно переходить в директорию с папкой, т.к. в проекте добавлены абсолютные пути в `sys.path`.
+Для корректкой работы сервиса Apache Airflow не обязательно переходить в директорию с папкой, т.к. в проекте добавлены абсолютные пути в `proj_path`.
 ```bash
 airflow standalone
 ```
