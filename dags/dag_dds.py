@@ -6,6 +6,7 @@ from airflow.providers.postgres.hooks.postgres import PostgresHook
 from airflow.operators.postgres_operator import PostgresOperator
 from airflow.operators.bash import BashOperator
 from airflow.operators.empty import EmptyOperator
+from airflow.operators.trigger_dagrun import TriggerDagRunOperator
 proj_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
 
@@ -27,17 +28,29 @@ default_args = {
 }
 
 dag = DAG(
-    'run_etl_tasks',
+    'DDS',
     default_args=default_args,
     description='ETL процесс по обработке таблиц из схемы sources в схему dds',
     template_searchpath=f'{proj_path}/sql/',
-    schedule_interval=timedelta(weeks=4),
+    schedule_interval=None,
 )
 
-task_truncate = PostgresOperator(
+task_truncate_dds = PostgresOperator(
     task_id='truncate_dds_tables',
     postgres_conn_id='korus_internship_2_db',
     sql='dds_truncate.sql',
+    dag=dag
+)
+
+task_truncate_error = PostgresOperator(
+    task_id='truncate_error_tables',
+    postgres_conn_id='korus_internship_2_db',
+    sql='error_truncate.sql',
+    dag=dag
+)
+
+task_start_transform = EmptyOperator(
+    task_id='start_transform',
     dag=dag
 )
 
@@ -77,10 +90,12 @@ trans_stock = BashOperator(
     dag=dag
 )
 
-end_task = EmptyOperator(
-    task_id='end_ETL',
+trigger_DM = TriggerDagRunOperator(
+    task_id='trigger_DM',
+    trigger_dag_id='DM',
     dag=dag
 )
 
-task_truncate >> [trans_brand, trans_category, trans_stores] >> trans_product >> [trans_stock, trans_transaction] >> end_task
+
+[task_truncate_dds, task_truncate_error] >> task_start_transform >> [trans_brand, trans_category, trans_stores] >> trans_product >> [trans_stock, trans_transaction] >> trigger_DM
  

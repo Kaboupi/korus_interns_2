@@ -1,6 +1,7 @@
 import os
 from datetime import datetime, timedelta
 from airflow import DAG
+from airflow.operators.trigger_dagrun import TriggerDagRunOperator
 from airflow.operators.postgres_operator import PostgresOperator
 from airflow.operators.empty import EmptyOperator
 proj_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
@@ -17,16 +18,11 @@ default_args = {
 }
 
 dag = DAG(
-    'create_ddl_layers',
+    'DDL_create',
     default_args=default_args,
     description='Создание схем и сущностей в БД',
     template_searchpath=f'{proj_path}/sql/',
     schedule_interval=None,
-)
-
-start_task = EmptyOperator(
-    task_id='start_task',
-    dag=dag,
 )
 
 create_schema = PostgresOperator(
@@ -50,10 +46,18 @@ create_error_tables = PostgresOperator(
     dag=dag
 )
 
-end_task = EmptyOperator(
-    task_id='end_task',
+create_dm_tables = PostgresOperator(
+    task_id='create_dm_tables',
+    postgres_conn_id='korus_internship_2_db',
+    sql='dm_create.sql',
+    dag=dag
+)
+
+trigger_DDS = TriggerDagRunOperator(
+    task_id='trigger_DDS',
+    trigger_dag_id='DDS',
     dag=dag
 )
 
 
-start_task >> create_schema >> [create_dds_tables, create_error_tables] >> end_task
+create_schema >> [create_dds_tables, create_dm_tables, create_error_tables] >> trigger_DDS

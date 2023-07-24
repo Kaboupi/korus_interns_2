@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS dds.transaction(
 );
 
 CREATE TABLE IF NOT EXISTS dds.stock(
-    available_on DATE,
+    available_on TIMESTAMP,
     product_id INTEGER REFERENCES dds.product(product_id),
     pos VARCHAR(150) REFERENCES dds.stores(pos),
     available_quantity NUMERIC(10,5),
