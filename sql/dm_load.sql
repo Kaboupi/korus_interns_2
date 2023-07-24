@@ -8,7 +8,7 @@ SELECT
 	str.pos_name,
 	quantity,
 	stk.available_quantity,
-	ROUND((price_full - price) * 100 / price_full, 2) AS sale,
+	ROUND((price_full - price) / price_full, 2) AS sale,
 	price,
 	price * quantity AS revenue,
 	stk.cost_per_item,

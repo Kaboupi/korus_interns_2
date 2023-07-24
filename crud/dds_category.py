@@ -29,7 +29,7 @@ def get_cats(df_cat: pd.DataFrame, df_brand: pd.DataFrame) -> set:
     
     # Убрали значения 'Значение{цифра}' (работа вручную)
     inc_val_idx = pd.Index(['PC7', '4E4', 'PC51', 'PC59', 'PC64', 'PC65', 'PC75', 'PC76', 'PC77', 'M11', '43B', 
-                            '459', '445', '46B', '446', '431', '442', 'C12', '4A1', '4A2', '46C', 'PC41'])
+                            '459', '445', '46B', '446', '431', '442', 'C12', '4A1', '4A2', '46C', 'PC41', 'R29'])
     df_cat_error = df_cat_error.append(df_cat.loc[inc_val_idx])
     df_cat_error['category_error_type'] = df_cat_error['category_error_type'].fillna('inc_val')
     
