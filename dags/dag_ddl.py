@@ -53,6 +53,13 @@ create_dm_tables = PostgresOperator(
     dag=dag
 )
 
+create_ref_tables = PostgresOperator(
+    task_id='create_reference_table',
+    postgres_conn_id='korus_internship_2_db',
+    sql='ref_info_create.sql',
+    dag=dag
+)
+
 trigger_DDS = TriggerDagRunOperator(
     task_id='trigger_DDS',
     trigger_dag_id='DDS',
@@ -60,4 +67,4 @@ trigger_DDS = TriggerDagRunOperator(
 )
 
 
-create_schema >> [create_dds_tables, create_dm_tables, create_error_tables] >> trigger_DDS
+create_schema >> create_ref_tables >> [create_dds_tables, create_dm_tables, create_error_tables] >> trigger_DDS
