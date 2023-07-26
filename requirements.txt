@@ -1,5 +1,3 @@
-numpy
-pandas
-pyyaml
 psycopg2-binary
+loguru
 xlrd

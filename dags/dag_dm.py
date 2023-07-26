@@ -2,7 +2,6 @@ import os
 from datetime import datetime, timedelta
 from airflow import DAG
 from airflow.operators.postgres_operator import PostgresOperator
-proj_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
 
 default_args = {
@@ -19,7 +18,7 @@ dag = DAG(
     dag_id='DM',
     default_args=default_args,
     description='dds -> dm',
-    template_searchpath=f'{proj_path}/sql/',
+    template_searchpath='/opt/airflow/sql/',
     schedule_interval='0 6 * * *',
 )
 

@@ -4,7 +4,6 @@ from airflow import DAG
 from airflow.operators.trigger_dagrun import TriggerDagRunOperator
 from airflow.operators.postgres_operator import PostgresOperator
 from airflow.operators.empty import EmptyOperator
-proj_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
 
 default_args = {
@@ -21,7 +20,7 @@ dag = DAG(
     'DDL_create',
     default_args=default_args,
     description='Создание схем и сущностей в БД',
-    template_searchpath=f'{proj_path}/sql/',
+    template_searchpath='/opt/airflow/sql/',
     schedule_interval=None,
 )
 

@@ -1,7 +1,6 @@
 import os
 import pandas as pd
 from loguru import logger
-proj_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
 
 def get_transactions(df_trans: pd.DataFrame, df_product: pd.DataFrame) -> set:
@@ -28,7 +27,7 @@ def get_transactions(df_trans: pd.DataFrame, df_product: pd.DataFrame) -> set:
 
 
 if __name__ == '__main__':
-    df_trans = pd.read_csv(f'{proj_path}/src/transaction.csv', index_col=['transaction_id', 'product_id', 'pos'])
+    df_trans = pd.read_csv('/opt/airflow/src/transaction.csv', index_col=['transaction_id', 'product_id', 'pos'])
     df_product = pd.read_sql('SELECT * FROM dds.product', con=os.environ['CONN_INTERNS'], index_col='product_id')
 
     df_trans, df_trans_error = get_transactions(df_trans, df_product)

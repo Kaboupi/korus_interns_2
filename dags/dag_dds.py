@@ -7,7 +7,6 @@ from airflow.operators.postgres_operator import PostgresOperator
 from airflow.operators.bash import BashOperator
 from airflow.operators.empty import EmptyOperator
 from airflow.operators.trigger_dagrun import TriggerDagRunOperator
-proj_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
 
 PG_HOOK_SOURCES = PostgresHook(postgres_conn_id='korus_internship_sources')
@@ -31,7 +30,7 @@ dag = DAG(
     'DDS',
     default_args=default_args,
     description='ETL процесс по обработке таблиц из схемы sources в схему dds',
-    template_searchpath=f'{proj_path}/sql/',
+    template_searchpath=f'/opt/airflow/sql/',
     schedule_interval=None,
 )
 
@@ -56,37 +55,37 @@ task_start_transform = EmptyOperator(
 
 trans_brand = BashOperator(
     task_id='transform_brand',
-    bash_command=f'python {proj_path}/crud/dds_brand.py',
+    bash_command=f'python /opt/airflow/crud/dds_brand.py',
     dag=dag
 )
 
 trans_category = BashOperator(
     task_id='transform_category',
-    bash_command=f'python {proj_path}/crud/dds_category.py',
+    bash_command=f'python /opt/airflow/crud/dds_category.py',
     dag=dag
 )
 
 trans_product = BashOperator(
     task_id='transform_product',
-    bash_command=f'python {proj_path}/crud/dds_product.py',
+    bash_command=f'python /opt/airflow/crud/dds_product.py',
     dag=dag
 )
 
 trans_stores = BashOperator(
     task_id='transform_stores',
-    bash_command=f'python {proj_path}/crud/dds_stores.py',
+    bash_command=f'python /opt/airflow/crud/dds_stores.py',
     dag=dag
 )
 
 trans_transaction = BashOperator(
     task_id='transform_transaction',
-    bash_command=f'python {proj_path}/crud/dds_transaction.py',
+    bash_command=f'python /opt/airflow/crud/dds_transaction.py',
     dag=dag
 )
 
 trans_stock = BashOperator(
     task_id='transform_stock',
-    bash_command=f'python {proj_path}/crud/dds_stock.py',
+    bash_command=f'python /opt/airflow/crud/dds_stock.py',
     dag=dag
 )
 
