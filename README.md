@@ -117,3 +117,4 @@ cd superset
 ```bash
 docker compose -f docker-compose-non-dev.yml up -d
 ```
+5. Перейдите в интерфейс **Apache Superset** по адресу https://localhost:8088/ и установите подключение с базой данных
