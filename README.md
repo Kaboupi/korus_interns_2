@@ -64,26 +64,56 @@
 │   ├── error_truncate.sql
 │   ├── ref_info_create.sql
 │   └── schema_create.sql
+├── .env
+├── docker-compose-airflow.yaml
+├── Dockerfile
 ├── README.md
 └── requirements.txt
 ```
 
 > Примечание: для корректной работы сервиса требуется создать папку **src/** в корневой директории проекта, поместив туда *.csv* файлы с транзакциями и названиями магазинов - **transaction.csv** и **stores.csv** соответственно
 
-## 3. Запуск
-Запуск сервиса Apache Airflow 2.6.3 происходил из нативно установленной версии. 
-Инструкция к нативной установке указана в [официальной документации Apache Airflow](https://airflow.apache.org/docs/apache-airflow/stable/start.html)
-Требуемые зависимости для корректной работы сервиса указаны в файле [requirements.txt](requirements.txt).
+## 3. Запуск сервиса Apache Airflow
+Запуск сервиса Apache Airflow 2.6.3 происходит при помощи **docker compose**. Официальная инструкция к установке указана в [официальной документации по установке Docker](https://docs.docker.com/desktop/install/windows-install/).
 
-Настройка окружения (если модуль apache-airflow установлен в одно из виртуальных окружений, то предварительно активируйте его)
+1. Скопируйте репозиторий на свою систему:
 ```bash
-pip install -Ur requirements.txt
+git clone https://github.com/Kaboupi/korus_interns_2.git
 ```
-Для корректкой работы сервиса Apache Airflow не обязательно переходить в директорию с папкой, т.к. в проекте добавлены абсолютные пути в `proj_path`.
+2. Перейдите в директорию с проектом:
 ```bash
-airflow standalone
+cd korus_interns_2
 ```
-Если появится ошибка `FileNotFoundError`, то перейдите в корневую директорию проекта, затем запустите Airflow
+3. Создайте папки для запуска **Apache Airflow**:
 ```bash
-cd /path/to/project/korus_interns_2/ && airflow standalone
+mkdir config logs plugins
+```
+4. (Только при первом запуске!) Инициализируйте базу данных в **Apache Airflow**:
+```bash
+docker compose -f docker-compose-airflow.yaml up airflow-init
+```
+5. После иниализации запустите контейнер:
+```bash
+docker compose -f docker-compose-airflow.yaml up -d
+```
+6. В интерфейсе https://localhost:8080/ по пути **Admin -> Connections** укажите соединения к БД
+
+## 4. Запуск сервиса Apache Superset
+Официальная инструкция к установке указана в [официальной документации к установке Apache Superset при помощи Docker Compose](https://superset.apache.org/docs/installation/installing-superset-using-docker-compose).
+
+1. Перейдите в папку с проектом **korus_interns_2**:
+```bash
+cd korus_interns_2
+```
+2. Скопируйте репозиторий Apache Superset на свою систему:
+```bash
+git clone https://github.com/apache/superset.git
+```
+3. Перейдите в директорию **superset**:
+```bash
+cd superset
+```
+4. Запустите контейнер:
+```bash
+docker compose -f docker-compose-non-dev.yml up -d
 ```
