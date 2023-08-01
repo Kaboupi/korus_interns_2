@@ -168,7 +168,7 @@ ORDER BY 1, 3, 2
 SELECT 
 	date::DATE AS "Дата",
 	name_short AS "Название продукта", 
-	sum(quantity) AS "Доступное количество"
+	sum(available_quantity) AS "Доступное количество"
 FROM dm.finalmart
 GROUP BY 1, 2
 ORDER BY 1
@@ -176,9 +176,9 @@ ORDER BY 1
 -- Объём продаж товара (pos_dashboard)
 SELECT
 	date::DATE AS "Дата",
-    category_name AS "Категория",
+	category_name AS "Категория",
 	name_short AS "Название продукта",
-	sum(quantity) AS "Объем продаж"
+	sum(available_quantity) AS "Объем продаж"
 FROM dm.finalmart
 GROUP BY 1, 2, 3
 ORDER BY 1
