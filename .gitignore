@@ -1,6 +1,7 @@
+.gitignore
 config
 dags/__pycache__
 logs
 plugins
 superset
-.gitignore
+src/*
